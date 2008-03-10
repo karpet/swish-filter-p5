@@ -1,0 +1,48 @@
+Revision history for Perl extension SWISH::Filter.
+
+0.01    original version
+
+0.02    Swish-e version 2.4.3
+
+0.03    first CPAN release 15 June 2006
+        Peter Karman took over maintenance and made the following
+        changes:
+          * renamed S::F::Document and S::F::Base and split
+            them into their own files
+          * added the doc_class() method to S::F
+          * standardized the naming of the core Filters
+          * POD cleanup and clarifications
+
+0.04    dump packaging error makes 0.03 fail 'make test' via CPAN
+        0.04 is identical to 0.03 but includes missing example script
+
+0.05	added --ignore_filters option to swish-filter-test example
+        fixed type() and priority() base filter methods to actually work
+        replaced test.doc with non-fast-saved version and removed comment in test
+        fixed skip_filters routine in Filter.pm to use hash ref instead of hash
+        added .ppt test file
+
+0.06	worked final (we hope) kinks out of make test, esp where Filters already installed
+
+0.07	added metadata() feature to Document class and updated Filters where applicable
+	added 'title' as default title_tag in Pdf2HTML
+        RT fix 20887
+        added SWISH::Filters::Decompress and associated t/*gz files
+
+0.08    changed metadata() to meta_data() and added ability to set it in convert()
+        thorough audit of all Filters to improve syntax and formatting
+        removed dependency on HTML::Entities (and thus HTML::Parser) by moving
+           escapeXML() into SWISH::Filters::Base
+        moved format_meta_headers() into SWISH::Filters::Base
+        added test.mp3 to test files
+        fixed SWISH::Filters::Decompress to correctly set MIME types using SWISH::Filter
+           instead of File::Type
+        added parent_filter() method to SWISH::Filters::Base
+        added base filter() method to SWISH::Filters::Base which will croak if not overridden
+        actually added SWISH::Filters::Decompress so it gets packaged... doh!
+
+0.09    fixed SWISH::Filter to actually set meta_data correctly, and SWISH::Filters::Decompress to pass it through
+
+0.10    cache can_filter() to avoid regexp check against all filters each time
+
+
