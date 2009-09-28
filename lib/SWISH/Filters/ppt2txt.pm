@@ -4,24 +4,22 @@ use vars qw/ $VERSION /;
 
 $VERSION = '0.11';
 
-sub new
-{
+sub new {
     my $class = shift;
-    my $self = bless {
+    my $self  = bless {
         mimetypes => [qr!application/vnd.ms-powerpoint!],
         priority => 45,    # lower than html filter
-                     }, $class;
+    }, $class;
 
     # check for helpers
     return $self->set_programs('catppt');
 
 }
 
-sub filter
-{
-    my ($self, $doc) = @_;
+sub filter {
+    my ( $self, $doc ) = @_;
 
-    my $content = $self->run_catppt($doc->fetch_filename) || return;
+    my $content = $self->run_catppt( $doc->fetch_filename ) || return;
 
     # update the document's content type
     $doc->set_content_type('text/plain');
