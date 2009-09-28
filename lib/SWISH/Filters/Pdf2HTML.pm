@@ -3,7 +3,7 @@ use strict;
 
 use vars qw( $VERSION );
 
-$VERSION = '0.11';
+$VERSION = '0.12_01';
 
 sub new {
     my ($class) = @_;
