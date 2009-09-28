@@ -165,11 +165,12 @@ sub set_programs
             return;
         }
 
-        no strict 'refs';
-        *{"run_$prog"} = sub {
-            my $self = shift;
-            return $self->run_program($path, @_);    # closure
-        };
+        if (!$self->can("run_${prog}")) {
+            no strict 'refs';
+            *{"run_$prog"} = sub {
+                return shift->run_program($path, @_);    # closure
+            };
+        }
     }
 
     return $self;
