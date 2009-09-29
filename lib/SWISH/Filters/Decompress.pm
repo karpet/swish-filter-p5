@@ -4,7 +4,7 @@ use warnings;
 use Carp;
 
 use vars qw( $VERSION );
-$VERSION = '0.12_01';
+$VERSION = '0.12';
 
 my %mimes = (
     'application/x-gzip' => 'gz',

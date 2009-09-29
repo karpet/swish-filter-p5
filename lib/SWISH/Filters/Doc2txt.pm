@@ -2,7 +2,7 @@ package SWISH::Filters::Doc2txt;
 use strict;
 use vars qw/ $VERSION /;
 
-$VERSION = '0.12_01';
+$VERSION = '0.12';
 
 sub new {
     my ($class) = @_;
