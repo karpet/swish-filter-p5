@@ -2,9 +2,9 @@ package SWISH::Filters::Decompress;
 use strict;
 use warnings;
 use Carp;
-
-use vars qw( $VERSION );
+use vars qw( $VERSION @ISA );
 $VERSION = '0.13';
+@ISA = ('SWISH::Filters::Base');
 
 my %mimes = (
     'application/x-gzip' => 'gz',

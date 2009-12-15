@@ -1,9 +1,9 @@
 package SWISH::Filters::XLtoHTML;
 use strict;
 require File::Spec;
-use vars qw( $VERSION );
-
+use vars qw( $VERSION @ISA );
 $VERSION = '0.13';
+@ISA = ('SWISH::Filters::Base');
 
 sub new {
     my ($class) = @_;

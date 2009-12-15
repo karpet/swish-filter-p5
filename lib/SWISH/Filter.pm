@@ -7,8 +7,7 @@ use Carp;
 
 use SWISH::Filter::Document;
 use SWISH::Filters::Base;
-
-my $BaseFilterClass = 'SWISH::Filters::Base';
+use Scalar::Util ();
 
 use vars qw/ $VERSION %extra_methods /;
 
@@ -167,6 +166,7 @@ sub new {
 
         # handle the lookup for a small number of types locally
         $self->{mimetypes} = $self;
+        Scalar::Util::weaken( $self->{mimetypes} );
 
     }
     else {
@@ -191,6 +191,7 @@ my %mime_types = (
     mp3  => 'audio/mpeg',
     gz   => 'application/x-gzip',
     xls  => 'application/vnd.ms-excel',
+    zip  => 'application/zip',
 );
 
 sub mimeTypeOf {
@@ -502,12 +503,6 @@ sub create_filter_list {
                 next;
             }
 
-            # Provide a base class for each filter
-            {
-                no strict 'refs';
-                push @{"$package\::ISA"}, $BaseFilterClass;
-            }
-
             my $filter = $package->new(%attr);
 
             $self->mywarn(
@@ -519,6 +514,7 @@ sub create_filter_list {
             # cache ourselves in this filter for parent_filter()
 
             $filter->{parent_filter} = $self;
+            Scalar::Util::weaken( $filter->{parent_filter} );
 
             push @filters, $filter;    # save it in our list.
         }
@@ -554,7 +550,7 @@ sub can_filter {
     my @filters;
 
     unless ($content_type) {
-        warn "Failed to pass in a content type to can_filter() method";
+        carp "Failed to pass in a content type to can_filter() method";
         return;
     }
 
