@@ -11,7 +11,7 @@ use Scalar::Util ();
 
 use vars qw/ $VERSION %extra_methods /;
 
-$VERSION = '0.13';
+$VERSION = '0.14';
 
 # Define the available parameters
 %extra_methods = map { $_ => 1 } qw( meta_data name user_data );
@@ -713,7 +713,7 @@ Here's a module to convert MS Word documents using the program "catdoc":
     package SWISH::Filters::Doc2txt;
     use vars qw/ $VERSION /;
 
-    $VERSION = '0.13';
+    $VERSION = '0.14';
 
 
     sub new {

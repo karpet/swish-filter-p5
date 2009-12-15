@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Carp;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.13';
+$VERSION = '0.14';
 @ISA = ('SWISH::Filters::Base');
 
 my %mimes = (

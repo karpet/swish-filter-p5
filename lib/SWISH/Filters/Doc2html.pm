@@ -1,7 +1,7 @@
 package SWISH::Filters::Doc2html;
 use strict;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.13';
+$VERSION = '0.14';
 @ISA = ('SWISH::Filters::Base');
 
 sub new {

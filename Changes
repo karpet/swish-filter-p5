@@ -55,3 +55,7 @@ Revision history for Perl extension SWISH::Filter.
 
 0.13    19 Nov 2009
         * fix path separator in tests to allow for Windows 
+
+0.14    xxx
+        * fix some memory leaks
+
