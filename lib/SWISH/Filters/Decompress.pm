@@ -76,8 +76,7 @@ sub decompress {
 
     if ( $self->{gz}->{perl} ) {
         my $r = $doc->fetch_doc_reference;
-
-        $buf = Compress::Zlib::memGunzip($$r);
+        $buf = Compress::Zlib::memGunzip($r);
     }
     elsif ( $self->{gz}->{bin} ) {
         $buf = $self->run_program( 'gunzip', '-c', $doc->fetch_filename );
