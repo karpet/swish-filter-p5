@@ -10,7 +10,14 @@ use Test::LeakTrace;
 
 use_ok('SWISH::Filter');
 
-leaks_cmp_ok {
-    my $filter = SWISH::Filter->new;
+SKIP: {
+
+    unless ( $ENV{TEST_LEAKS} ) {
+        skip "set TEST_LEAKS to test memory leaks", 1;
+    }
+    leaks_cmp_ok {
+        my $filter = SWISH::Filter->new;
+    }
+    '<', 1;
+
 }
-'<', 1;
