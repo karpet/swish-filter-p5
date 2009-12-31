@@ -16,7 +16,10 @@ SKIP: {
         skip "set TEST_LEAKS to test memory leaks", 1;
     }
     leaks_cmp_ok {
+        #diag("start block");
         my $filter = SWISH::Filter->new;
+        #diag("new SWISH::Filter");
+        #$filter = undef;
     }
     '<', 1;
 

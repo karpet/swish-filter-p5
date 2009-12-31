@@ -59,4 +59,5 @@ Revision history for Perl extension SWISH::Filter.
 0.14    xxx
         * fix some memory leaks
         * add 'application/xml' as alternate to text/xml MIME
-
+        * add SWISH::Filter::MIMETypes to avoid some circular references, 
+          deprecate parent_filter() method.

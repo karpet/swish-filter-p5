@@ -4,10 +4,15 @@ use 5.005;
 use strict;
 use File::Basename;
 use Carp;
-
+use Data::Dump qw( dump );
+use SWISH::Filter::MIMETypes;
 use SWISH::Filter::Document;
 use SWISH::Filters::Base;
-use Scalar::Util ();
+use Module::Pluggable
+    search_path => 'SWISH::Filters',
+    except      => 'SWISH::Filters::Base',
+    sub_name    => 'filters_found',
+    require     => 1;
 
 use vars qw/ $VERSION %extra_methods /;
 
@@ -156,48 +161,13 @@ sub new {
 
     warn "Unknown SWISH::Filter->new() config setting '$_'\n" for keys %attr;
 
+    $self->{mimetypes} = SWISH::Filter::MIMETypes->new;
+
     $self->create_filter_list(%attr);
-
-    eval { require MIME::Types };
-    if ($@) {
-        $class->mywarn(
-            "Failed to load MIME::Types\n$@\nInstall MIME::Types for more complete MIME support"
-        );
-
-        # handle the lookup for a small number of types locally
-        $self->{mimetypes} = $self;
-        Scalar::Util::weaken( $self->{mimetypes} );
-
-    }
-    else {
-        $self->{mimetypes} = MIME::Types->new;
-    }
 
     $self->{doc_class} ||= 'SWISH::Filter::Document';
 
     return $self;
-}
-
-# Here's some common mime types
-my %mime_types = (
-    doc  => 'application/msword',
-    pdf  => 'application/pdf',
-    ppt  => 'application/vnd.ms-powerpoint',
-    html => 'text/html',
-    htm  => 'text/html',
-    txt  => 'text/plain',
-    text => 'text/plain',
-    xml  => 'text/xml',
-    mp3  => 'audio/mpeg',
-    gz   => 'application/x-gzip',
-    xls  => 'application/vnd.ms-excel',
-    zip  => 'application/zip',
-);
-
-sub mimeTypeOf {
-    my ( $self, $file ) = @_;
-    $file =~ s/.*\.//;
-    return $mime_types{$file} || undef;
 }
 
 sub ignore_filters {
@@ -461,63 +431,21 @@ sub filter_list {
 }
 
 # Creates the list of filters
-
 sub create_filter_list {
-    my ( $self, %attr ) = @_;
-
+    my $self = shift;
+    my %attr = @_;
+    
     my @filters;
-    my %seen;
 
-    # Look for filters to load
-    for my $inc_path (@INC) {
-        my $cur_path = "$inc_path/SWISH/Filters";
+    for my $class ( $self->filters_found ) {
+        my $filter = $class->new(%attr);
 
-        next unless opendir( DIR, $cur_path );
-
-        while ( my $file = readdir(DIR) ) {
-            my $full_path = "$cur_path/$file";
-
-            next unless -f $full_path;
-
-            my ( $base, $path, $suffix ) = fileparse( $full_path, "\.pm" );
-
-            next if $base eq 'Base';    # our base class
-
-            next unless $suffix eq '.pm';
-
-            # Should this filter be skipped?
-            next if $self->{skip_filters}{$base};
-
-            my $package = "SWISH::Filters::" . $base;
-
-            next if $seen{$package}++;
-
-            $self->mywarn("\n>> Loading filter: [$path${base}$suffix]");
-
-            eval "require $package";
-
-            if ($@) {
-                $self->mywarn(
-                    "Failed to load 'SWISH/Filters/${base}$suffix'\n",
-                    '-+' x 40, "\n", $@, '-+' x 40, "\n" );
-                next;
-            }
-
-            my $filter = $package->new(%attr);
-
-            $self->mywarn(
-                " Error: filter [SWISH/Filters/${base}$suffix] not loaded\n")
-                unless $filter;
-
-            next unless $filter;    # may not get installed
-
-            # cache ourselves in this filter for parent_filter()
-
-            $filter->{parent_filter} = $self;
-            Scalar::Util::weaken( $filter->{parent_filter} );
-
-            push @filters, $filter;    # save it in our list.
+        if ( !$filter ) {
+            $self->mywarn(" Error: filter $class not loaded\n");
+            next;    # may not get installed
         }
+
+        push @filters, $filter;    # save it in our list.
     }
 
     unless (@filters) {
@@ -526,11 +454,9 @@ sub create_filter_list {
     }
 
     # Now sort the filters in order.
-    $self->filter_list(
-        [   sort { $a->type <=> $b->type || $a->priority <=> $b->priority }
-                @filters
-        ]
-    );
+    @filters = sort { $a->type <=> $b->type || $a->priority <=> $b->priority }
+        @filters;
+    $self->filter_list( \@filters );
 }
 
 =head2 can_filter( I<content_type> )
@@ -581,7 +507,7 @@ sub decode_content_type {
 
     return unless $file;
 
-    return ( $self->{mimetypes} )->mimeTypeOf($file);
+    return $self->{mimetypes}->get_mime_type($file);
 }
 
 =head1 WRITING FILTERS
