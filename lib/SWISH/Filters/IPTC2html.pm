@@ -1,6 +1,6 @@
 package SWISH::Filters::IPTC2html;
 use strict;
-use Image::IPTCInfo;
+use warnings;
 use vars qw( $VERSION @ISA );
 $VERSION = '0.14';
 @ISA     = ('SWISH::Filters::Base');
@@ -9,9 +9,7 @@ sub new {
 
     my ($class) = @_;
     my $self = bless {
-
         mimetypes => [qr!image/jpeg!],    # list of types this filter handles
-
     }, $class;
     return $self->use_modules(qw/ Image::IPTCInfo /);
 }
