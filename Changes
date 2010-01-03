@@ -56,7 +56,7 @@ Revision history for Perl extension SWISH::Filter.
 0.13    19 Nov 2009
         * fix path separator in tests to allow for Windows 
 
-0.14    xxx
+0.14    02 Jan 2009
         * fix some memory leaks
         * add 'application/xml' as alternate to text/xml MIME
         * add SWISH::Filter::MIMETypes to avoid some circular references, 
