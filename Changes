@@ -61,3 +61,4 @@ Revision history for Perl extension SWISH::Filter.
         * add 'application/xml' as alternate to text/xml MIME
         * add SWISH::Filter::MIMETypes to avoid some circular references, 
           deprecate parent_filter() method.
+        * add Module::Pluggable as a dependency, to handle the *::Filters::* loading.
