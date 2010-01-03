@@ -4,7 +4,6 @@ use 5.005;
 use strict;
 use File::Basename;
 use Carp;
-use Data::Dump qw( dump );
 use SWISH::Filter::MIMETypes;
 use SWISH::Filter::Document;
 use SWISH::Filters::Base;
@@ -12,7 +11,8 @@ use Module::Pluggable
     search_path => 'SWISH::Filters',
     except      => 'SWISH::Filters::Base',
     sub_name    => 'filters_found',
-    require     => 1;
+    require     => 1,
+    instantiate => 'new';
 
 use vars qw/ $VERSION %extra_methods /;
 
@@ -435,18 +435,7 @@ sub create_filter_list {
     my $self = shift;
     my %attr = @_;
     
-    my @filters;
-
-    for my $class ( $self->filters_found ) {
-        my $filter = $class->new(%attr);
-
-        if ( !$filter ) {
-            $self->mywarn(" Error: filter $class not loaded\n");
-            next;    # may not get installed
-        }
-
-        push @filters, $filter;    # save it in our list.
-    }
+    my @filters = grep { defined } $self->filters_found(%attr);
 
     unless (@filters) {
         warn "No SWISH filters found\n";

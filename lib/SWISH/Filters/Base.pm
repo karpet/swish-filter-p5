@@ -1,7 +1,6 @@
 package SWISH::Filters::Base;
 use strict;
 use Carp;
-use Data::Dump qw( dump );
 use vars qw( $VERSION );
 
 $VERSION = '0.14';
