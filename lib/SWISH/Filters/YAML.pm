@@ -7,7 +7,12 @@ use Data::Dump qw( dump );
 
 sub new {
     my ($class) = @_;
-    my $self = bless { mimetypes => [qr!application/json!], }, $class;
+    my $self = bless {
+        mimetypes => [
+            qr!application/x-yaml!, qr!application/yaml!,
+            qr!text/yaml!,          qr!text/x-yaml!
+        ],
+    }, $class;
     return $self->use_modules(qw( YAML Search::Tools::XML ));
 }
 
