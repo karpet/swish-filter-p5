@@ -1,5 +1,9 @@
 Revision history for Perl extension SWISH::Filter.
 
+0.190 04 Aug 2014
+ - moved to github
+ - added SWISH::Filters::PDF2XML using CAM::PDF
+
 0.18 13 Feb 2013
  - Filters::Base->use_modules now supports required minimum version of
    supporting module
