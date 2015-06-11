@@ -13,10 +13,14 @@ diag("testing SWISH::Filter version $SWISH::Filter::VERSION");
 
 diag("running the example script");
 my $sep = $^O =~ /Win32/ ? '\\' : '/';
-ok(run("$^X example${sep}swish-filter-test --quiet --noskip_binary t${sep}test.*"), "example docs");
+my $files = "t${sep}test.*";
+if ($^O eq 'MSWin32') {
+    $files = join(' ', glob($files));
+}
+ok(run("$^X example${sep}swish-filter-test --quiet --noskip_binary $files"), "example docs");
 ok(
     run(
-        "$^X example${sep}swish-filter-test --quiet --noskip_binary --ignore XLtoHTML --ignore pp2html t${sep}test.*"
+        "$^X example${sep}swish-filter-test --quiet --noskip_binary --ignore XLtoHTML --ignore pp2html $files"
        ),
     "example docs using catdoc"
   );
