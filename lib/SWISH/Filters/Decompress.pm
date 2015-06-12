@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Carp;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.190';
+$VERSION = '0.191';
 @ISA     = ('SWISH::Filters::Base');
 use SWISH::Filter::MIMETypes;
 

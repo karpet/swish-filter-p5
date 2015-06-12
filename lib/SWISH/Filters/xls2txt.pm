@@ -1,7 +1,7 @@
 package SWISH::Filters::xls2txt;
 use strict;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.190';
+$VERSION = '0.191';
 @ISA = ('SWISH::Filters::Base');
 
 sub new {
