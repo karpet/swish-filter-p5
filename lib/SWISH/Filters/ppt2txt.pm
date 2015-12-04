@@ -1,7 +1,7 @@
 package SWISH::Filters::ppt2txt;
 use strict;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.191';
+$VERSION = '0.20';
 @ISA = ('SWISH::Filters::Base');
 
 sub new {

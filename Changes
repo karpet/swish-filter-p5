@@ -1,5 +1,8 @@
 Revision history for Perl extension SWISH::Filter.
 
+0.20  xxx
+ - add documentation
+
 0.191 12 June 2015
  - patch for Windows compatability from Alexandr Ciornii
 

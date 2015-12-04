@@ -2,7 +2,7 @@ package SWISH::Filters::XLtoHTML;
 use strict;
 require File::Spec;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.191';
+$VERSION = '0.20';
 @ISA = ('SWISH::Filters::Base');
 
 sub new {

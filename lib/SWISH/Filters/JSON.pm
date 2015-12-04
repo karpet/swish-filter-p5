@@ -1,7 +1,7 @@
 package SWISH::Filters::JSON;
 use strict;
 use vars qw( $VERSION @ISA );
-$VERSION = '0.191';
+$VERSION = '0.20';
 @ISA     = ('SWISH::Filters::Base');
 use Data::Dump qw( dump );
 
