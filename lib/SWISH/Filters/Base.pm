@@ -20,9 +20,16 @@ when writing your new() constructor.
 
 =head1 METHODS
 
-=head2 filter
+=head2 filter( I<swish_filter_document_instance> )
 
 You B<must> override this method in your filter subclass.
+
+Your filter method should return either a SCALAR reference to the filtered
+string or a pathname string (not a reference).
+
+If no filtering is performed, should return undef.
+
+For examples, see the filter() method in any of the Filters included with this module.
 
 =cut
 
