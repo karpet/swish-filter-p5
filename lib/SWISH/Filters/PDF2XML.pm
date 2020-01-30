@@ -7,7 +7,10 @@ $VERSION = '0.20';
 sub new {
     my ($class) = @_;
 
-    my $self = bless { mimetypes => [qr!application/pdf!], }, $class;
+    my $self = bless {
+        mimetypes => [qr!application/pdf!],
+        priority => 45,    # higher priority than pdftotext in Pdf2Html
+    }, $class;
 
     # optional module for local timestamps
     if ( $self->use_modules(qw/ Time::Local /) ) {

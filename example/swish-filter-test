@@ -94,6 +94,7 @@ if ($mimetypes)
     for my $filter (@filters)
     {
         print "  $filter:\n";
+        print "   priority: " . $filter->priority . "\n";
         for my $pattern ($filter->mimetypes)
         {
             print "     $pattern\n";
