@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 
@@ -300,6 +300,7 @@ swish-filter-test [options] <file or url>  <...>
    -path             output @INC path to SWISH::Filter module
    -help             brief help message
    -man              full documentation
+   -mimetypes        prints list of installed Filters and MIME types
    -ignore <filter>  ignore <filter> in selecting a filter to use
 
 =head1 DESCRIPTION
@@ -340,6 +341,9 @@ Enables FILTER_DEBUG mode in the SWISH::Filter module, and enables extra info
 including a summary of the filtered document to stderr.  Enable if trying to find
 out why a filter does not work.
 
+=item B<-mimetypes>
+
+Prints out the list of Filters installed and which MIME types they operate on.
 
 =item B<-lines>
 
